@@ -118,7 +118,7 @@ app.post("/requests", (req, res) => {
 });
 
 app.get("/requests", (req, res) => {
-    con.query('SELECT * FROM Requests', (err, result) => {
+    con.query('SELECT * FROM requests', (err, result) => {
         if (err) throw err
         // console.log(result)
         return res.json(result)
