@@ -32,10 +32,10 @@ app.post("/login", (req, res) => {
 })
 
 app.get("/directors", (req, res) => {
-    // con.query("SELECT * FROM directors where designation != 'ceo'", (err, result) => {
-        // if (err) throw err
+    con.query("SELECT * FROM directors where designation != 'ceo'", (err, result) => {
+        if (err) throw err
         return res.json("result")
-    // })
+    })
 });
 app.get("/directors/:email", (req, res) => {
     const email = req.params.email
