@@ -25,7 +25,7 @@ con.connect((err) => {
 });
 
 app.post("/login", (req, res) => {
-    const q = "SELECT admin FROM Directors WHERE email= ? and pass = ?";
+    const q = "SELECT admin FROM directors WHERE email= ? and pass = ?";
     con.query(q, [req.body.email, req.body.password], (err, result) => {
         if (err) throw err
         return (result.length > 0) ? res.json("success") : res.json("failed")
@@ -48,7 +48,7 @@ app.get("/directors/:email", (req, res) => {
 });
 
 app.post("/directors", (req, res) => {
-    const q = "INSERT INTO Directors (firstname, lastname, designation, email, pass) VALUES (?)";
+    const q = "INSERT INTO directors (firstname, lastname, designation, email, pass) VALUES (?)";
     const values = [
         req.body.fname,
         req.body.lname,
@@ -65,7 +65,7 @@ app.post("/directors", (req, res) => {
 app.delete("/directors/:DirectorID", (req, res) => {
     const id = req.params.DirectorID
 
-    const q = "DELETE FROM Directors WHERE DirectorID = ?";
+    const q = "DELETE FROM directors WHERE DirectorID = ?";
 
     con.query(q, [id], (err) => {
         if (err) throw err;
@@ -84,7 +84,7 @@ app.put("/directors/:DirectorID", (req, res) => {
 app.put("/directors/:DirectorID", (req, res) => {
     const id = req.params.DirectorID
 
-    const q = "UPDATE Directors SET `firstname` = ?, `lastname` = ?, `designation` = ?, `email` = ?, `pass` = ? WHERE DirectorID = ?";
+    const q = "UPDATE directors SET `firstname` = ?, `lastname` = ?, `designation` = ?, `email` = ?, `pass` = ? WHERE DirectorID = ?";
 
     const values = [
         req.body.fname,
@@ -100,7 +100,7 @@ app.put("/directors/:DirectorID", (req, res) => {
     })
 });
 app.post("/requests", (req, res) => {
-    const q = "INSERT INTO Requests (amount, des, slip, date, time, user) VALUES (?)";
+    const q = "INSERT INTO requests (amount, des, slip, date, time, user) VALUES (?)";
     const time = new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
     const date = new Date().toISOString().slice(0, 10)
 
@@ -137,9 +137,9 @@ app.delete("/requests/:RequestID", (req, res) => {
         res.end()
     }
     else {
-        const qu = `INSERT INTO Approved(amount, des, user, date, time, approved) VALUES ((SELECT amount from Requests WHERE RequestID =${id}), (SELECT des from Requests WHERE RequestID =${id}), (select user from Requests WHERE RequestID =${id} ), '${date}', '${time}', '${name}')`
+        const qu = `INSERT INTO approved(amount, des, user, date, time, approved) VALUES ((SELECT amount from requests WHERE RequestID =${id}), (SELECT des from requests WHERE RequestID =${id}), (select user from requests WHERE RequestID =${id} ), '${date}', '${time}', '${name}')`
         con.query(qu)
-        const q = "DELETE FROM Requests WHERE RequestID = ?";
+        const q = "DELETE FROM requests WHERE RequestID = ?";
         con.query(q, [id], (err) => {
             if (err) throw err;
             return res.json("Deleted")
@@ -147,7 +147,7 @@ app.delete("/requests/:RequestID", (req, res) => {
     }
 });
 app.get("/approved", (req, res) => {
-    con.query('SELECT * FROM Approved', (err, result) => {
+    con.query('SELECT * FROM approved', (err, result) => {
         if (err) throw err
         console.log(result)
         return res.json(result)
