@@ -4,7 +4,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 const path = require('path');
 const corsOptions = {
-  origin:"http://localhost:3000",
+  origin:"https://bucolic-pony-cc177a.netlify.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",};
 app.use(cors(corsOptions));
 app.use(express.json());
