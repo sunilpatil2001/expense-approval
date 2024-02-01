@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname + "/public")))
 
 const con = mysql.createConnection({
-    host: 'http://sql6.freesqldatabase.com/',
+    host: 'sql6.freesqldatabase.com',
     user: 'sql6681271',
     password: '4m27VyfWdV',
     database: 'sql6681271'
